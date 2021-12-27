@@ -22,13 +22,7 @@ class ProductController extends BaseController
 
     public function store(ProductRequest $request)
     {
-        $data = [
-            'name' => $request->name,
-            'slug' => $request->slug,
-            'description' => $request->description,
-            'price' => $request->price,
-        ];
-        return $this->returnApiResponse($this->service->storeProduct($data));
+        return $this->returnApiResponse($this->service->storeProduct($request));
     }
 
     public function show($id)
