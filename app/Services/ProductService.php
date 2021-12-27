@@ -25,4 +25,13 @@ class ProductService implements ProductServiceContract
         }
         return getFormattedResponseData([], 'Product data not found.', false, Response::HTTP_NOT_FOUND);
     }
+
+    public function storeProduct($data)
+    {
+        $responce = $this->repository->storeData($data);
+        if ($responce){
+            return getFormattedResponseData($responce, 'Product created successfully', true, Response::HTTP_OK);
+        }
+        return getFormattedResponseData([], 'Something went wrong.', false, Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
 }

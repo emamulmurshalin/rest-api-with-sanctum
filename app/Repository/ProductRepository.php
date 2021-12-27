@@ -18,4 +18,9 @@ class ProductRepository extends BaseRepository implements ProductRepositoryContr
     {
         return $this->model->all();
     }
+
+    public function storeData($data)
+    {
+        return $this->model->create($data);
+    }
 }
