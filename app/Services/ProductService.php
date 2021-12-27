@@ -73,4 +73,13 @@ class ProductService implements ProductServiceContract
         }
         return getFormattedResponseData([], 'Something went wrong', false, Response::HTTP_NOT_FOUND);
     }
+
+    public function searchProduct($search)
+    {
+        $responce = $this->repository->getProductByName($search);
+        if ($responce){
+            return getFormattedResponseData($responce, 'Product get successfully', true, Response::HTTP_OK);
+        }
+        return getFormattedResponseData([], 'Product not found', false, Response::HTTP_NOT_FOUND);
+    }
 }

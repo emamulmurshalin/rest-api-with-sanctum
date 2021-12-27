@@ -11,4 +11,6 @@ interface ProductRepositoryContract
     public function storeData($data);
 
     public function getProductById($id);
+
+    public function getProductByName($name);
 }

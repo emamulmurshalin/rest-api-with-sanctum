@@ -15,4 +15,6 @@ interface ProductServiceContract
     public function updateProduct($data, $id);
 
     public function deleteProduct($id);
+
+    public function searchProduct($search);
 }

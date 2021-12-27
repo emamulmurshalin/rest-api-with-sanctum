@@ -40,4 +40,9 @@ class ProductController extends BaseController
     {
         return $this->returnApiResponse($this->service->deleteProduct($id));
     }
+
+    public function search($search)
+    {
+        return $this->returnApiResponse($this->service->searchProduct($search));
+    }
 }

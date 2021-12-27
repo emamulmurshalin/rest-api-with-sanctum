@@ -28,4 +28,13 @@ class ProductRepository extends BaseRepository implements ProductRepositoryContr
     {
         return $this->model->find($id);
     }
+
+    public function getProductByName($name)
+    {
+        return $this->model
+            ->where('name', 'LIKE', "%{$name}%")
+            ->limit(10)
+            ->orderBy('name')
+            ->get();
+    }
 }
