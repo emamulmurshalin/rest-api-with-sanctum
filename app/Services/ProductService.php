@@ -23,7 +23,7 @@ class ProductService implements ProductServiceContract
         if ($responce){
             return getFormattedResponseData($responce, 'Product data get successfully', true, Response::HTTP_OK);
         }
-        return getFormattedResponseData([], 'Product data not found.', false, Response::HTTP_NOT_FOUND);
+        return getFormattedResponseData([], 'Product data not found', false, Response::HTTP_NOT_FOUND);
     }
 
     public function storeProduct($request)
@@ -38,6 +38,39 @@ class ProductService implements ProductServiceContract
         if ($responce){
             return getFormattedResponseData($responce, 'Product created successfully', true, Response::HTTP_OK);
         }
-        return getFormattedResponseData([], 'Something went wrong.', false, Response::HTTP_INTERNAL_SERVER_ERROR);
+        return getFormattedResponseData([], 'Something went wrong', false, Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    public function getProductById($id)
+    {
+        $responce = $this->repository->getProductById($id);
+        if ($responce){
+            return getFormattedResponseData($responce, 'Product get successfully', true, Response::HTTP_OK);
+        }
+        return getFormattedResponseData([], 'Product not found', false, Response::HTTP_NOT_FOUND);
+    }
+
+    public function updateProduct($data, $id)
+    {
+        $data = [
+            'name' => $data->name,
+            'slug' => $data->slug,
+            'description' => $data->description,
+            'price' => $data->price,
+        ];
+        $responce = $this->repository->update($data, $id);
+        if ($responce){
+            return getFormattedResponseData($responce, 'Product updated successfully', true, Response::HTTP_OK);
+        }
+        return getFormattedResponseData([], 'Something went wrong', false, Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    public function deleteProduct($id)
+    {
+        $responce = $this->repository->delete($id);
+        if ($responce){
+            return getFormattedResponseData($responce, 'Product deleted successfully', true, Response::HTTP_OK);
+        }
+        return getFormattedResponseData([], 'Something went wrong', false, Response::HTTP_NOT_FOUND);
     }
 }

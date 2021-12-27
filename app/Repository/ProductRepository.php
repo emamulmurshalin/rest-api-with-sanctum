@@ -23,4 +23,9 @@ class ProductRepository extends BaseRepository implements ProductRepositoryContr
     {
         return $this->model->create($data);
     }
+
+    public function getProductById($id)
+    {
+        return $this->model->find($id);
+    }
 }

@@ -9,4 +9,6 @@ interface ProductRepositoryContract
     public function productList($request);
 
     public function storeData($data);
+
+    public function getProductById($id);
 }
