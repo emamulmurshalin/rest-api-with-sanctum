@@ -26,6 +26,24 @@ class UserService implements UserServiceContract
             'password' => Hash::make($request->password)
         ];
         $user = $this->repository->registerUser($data);
+        $token = $user->createToken('myAppToken')->plainTextToken;
+        $responce = [
+            'user' => $user,
+            'token' => $token
+        ];
+        if ($user){
+            return getFormattedResponseData($responce, 'User created successfully', true, Response::HTTP_CREATED);
+        }
+        return getFormattedResponseData([], 'Something went wrong', false, Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    public function loginProcess($request)
+    {
+        $data = $request->validate([
+            'email' => 'required',
+            'password' => 'required'
+        ]);
+        $user = $this->repository->getUserByEmail($data['email']);
 
         if (!$user || !Hash::check($data['password'], $user->password)){
             return getFormattedResponseData([], 'Wrong credential', false, Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -36,28 +54,7 @@ class UserService implements UserServiceContract
             'user' => $user,
             'token' => $token
         ];
-        return getFormattedResponseData($responce, 'Login successfully', true, Response::HTTP_OK);
-    }
-
-    public function loginProcess($request)
-    {
-
-        $data = $request->validate([
-            'email' => 'required',
-            'password' => 'required'
-        ]);
-        $user = $this->repository->getUserByEmail($data['email']);
-
-
-        $token = $user->createToken('myAppToken')->plainTextToken;
-        $responce = [
-            'user' => $user,
-            'token' => $token
-        ];
-        if ($user){
-            return getFormattedResponseData($responce, 'User created successfully', true, Response::HTTP_CREATED);
-        }
-        return getFormattedResponseData([], 'Something went wrong', false, Response::HTTP_INTERNAL_SERVER_ERROR);
+        return getFormattedResponseData($responce, 'Login successfully', true, Response::HTTP_CREATED);
     }
 
     public function logout($request)
