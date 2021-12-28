@@ -36,7 +36,7 @@ class ProductService implements ProductServiceContract
         ];
         $responce = $this->repository->storeData($data);
         if ($responce){
-            return getFormattedResponseData($responce, 'Product created successfully', true, Response::HTTP_OK);
+            return getFormattedResponseData($responce, 'Product created successfully', true, Response::HTTP_CREATED);
         }
         return getFormattedResponseData([], 'Something went wrong', false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
